@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פרחי שרון · עיצוב פרחוני לאירועים</title>
+<meta name="description" content="עיצוב חופות ומרכזי שולחן לחתונות ולאירועים. פרחים טריים, עיצוב מדויק.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap">
+<style>
+@font-face{font-family:"Shikma";src:url("shikma-extrabold.woff") format("woff");font-weight:800;font-style:normal;font-display:swap}
+:root{
+  --bg:#15120f; --surface:#1f1a16; --line:rgb(244 238 228 / .14);
+  --ink:#f4eee4; --muted:#c2b8a9; --blush:#f2c9c4; --sage:#8d9163;
+  --serif:"Shikma","Frank Ruhl Libre",serif;
+  --sans:"Assistant","Arial Hebrew",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+
+/* Header */
+.hdr{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:1.5rem;padding:1rem clamp(1rem,4vw,3.5rem);background:linear-gradient(to bottom,rgb(21 18 15 / .9),rgb(21 18 15 / 0));}
+.hdr{transition:background-color .3s}
+.hdr.is-solid{background:rgb(21 18 15 / .94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hdr__logo img{width:clamp(88px,9vw,120px);height:auto}
+.hdr__nav{display:flex;gap:1.4rem;margin-inline-start:auto}
+.hdr__nav a{text-decoration:none;font-weight:600;padding-block:.35rem;border-bottom:1px solid transparent;transition:border-color .25s}
+.hdr__nav a:hover,.hdr__nav a[aria-current="true"]{border-bottom-color:var(--blush)}
+.hdr__cta{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border:1px solid var(--blush);border-radius:999px;color:var(--blush);font-weight:600;text-decoration:none;transition:background-color .25s,color .25s}
+.hdr__cta:hover{background:var(--blush);color:var(--bg)}
+.hdr__cta svg{width:1.15rem;height:1.15rem}
+
+/* Journey */
+.journey{position:relative}
+.stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden}
+.bg-layer,.frame-layer{position:absolute;inset:0;opacity:0;will-change:opacity}
+.bg-layer img{width:100%;height:100%;object-fit:cover;filter:blur(28px) brightness(.38) saturate(1.1);transform:scale(1.15)}
+.frame-layer img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--bg)}
+.stage__shade{position:absolute;inset:0;background:linear-gradient(to left,rgb(21 18 15 / .82) 0%,rgb(21 18 15 / .45) 38%,transparent 62%);pointer-events:none}
+.story{position:relative;z-index:3;margin-top:-100vh;margin-top:-100dvh;pointer-events:none}
+.chapter{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:0 clamp(1.25rem,7vw,7rem)}
+.chapter[data-ch="0"]{min-height:105vh;padding-top:24vh}
+.chapter[data-ch="t"]{min-height:120vh;padding-top:45vh;align-items:flex-end}
+.chapter[data-ch="1"]{min-height:150vh;padding-top:45vh}
+.copy{position:relative;width:min(40rem,46vw);pointer-events:auto;will-change:transform,opacity}
+.copy::before{content:"";position:absolute;z-index:-1;inset:-3rem -4rem;background:radial-gradient(ellipse at center,rgb(21 18 15 / .72) 0%,rgb(21 18 15 / .4) 50%,transparent 75%);pointer-events:none}
+.kicker{line-height:1.2;margin:0 0 .6rem;color:var(--blush);font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:1.05rem}
+.chapter h1,.chapter h2{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(2.5rem,5.6vw,5.6rem);line-height:.95;letter-spacing:-.02em;max-width:13ch}
+.chapter h1{white-space:nowrap;max-width:none}
+.chapter p.body{margin:1rem 0 0;max-width:40ch;color:var(--muted);font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.4;letter-spacing:-.005em}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 0;padding:0;list-style:none}
+.tags li{padding:.4rem .95rem;border:1px solid rgb(141 145 99 / .75);border-radius:999px;font-size:.92rem}
+.hero-cta{display:inline-flex;align-items:center;gap:.7rem;margin-top:1.4rem;padding:.85rem 1.6rem .85rem 1.3rem;border-radius:999px;background:var(--blush);color:var(--bg);font-size:1.1rem;font-weight:700;text-decoration:none;box-shadow:0 10px 40px rgb(242 201 196 / .22);transition:transform .3s,box-shadow .3s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 14px 50px rgb(242 201 196 / .38)}
+.hero-cta img{width:1.6rem;height:1.6rem;transition:transform .6s}
+.hero-cta:hover img{transform:rotate(72deg)}
+.hdr__cta{margin-inline-start:auto}
+.route{position:absolute;top:100%;right:clamp(.4rem,3vw,2.6rem);display:flex;gap:.2rem;margin-top:-.4rem}
+.hdr.is-solid{padding-bottom:3.1rem}
+.hdr.is-solid .route{top:auto;bottom:.2rem;margin-top:0}
+.route button{text-shadow:0 1px 10px rgb(0 0 0 / .8);min-height:2.75rem;padding:.6rem .9rem;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;cursor:pointer}
+.route button[aria-current="step"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--blush);text-decoration-thickness:.15em;text-underline-offset:.35em}
+.progress{position:absolute;top:0;inset-inline:0;height:2px;background:rgb(244 238 228 / .12);z-index:6}
+.progress span{display:block;height:100%;background:var(--blush);transform-origin:right center;transform:scaleX(0)}
+
+/* Scroll cue */
+.cue{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom));left:50%;z-index:40;display:flex;flex-direction:column;align-items:center;gap:.35rem;transform:translateX(-50%);text-decoration:none;transition:opacity .4s,transform .4s}
+.cue.is-hidden{pointer-events:none}
+.cue.is-hidden{opacity:0;transform:translate(-50%,.75rem)}
+.cue span{font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:.02em;text-shadow:0 1px 10px rgb(0 0 0 / .8)}
+.cue svg{width:3.6rem;height:3.6rem;padding:.6rem;stroke-width:1.8;border:1px solid rgb(242 201 196 / .6);border-radius:50%;color:var(--blush);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(.5rem)}}
+
+/* Shared */
+.label{margin:0 0 .8rem;color:var(--sage);font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:1.05rem}
+.h2{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(2.3rem,4.6vw,4rem);line-height:.95;letter-spacing:-.02em}
+.lead{margin:1rem 0 0;max-width:34ch;color:var(--muted);font-size:1.15rem;line-height:1.4;letter-spacing:-.005em}
+section[id]{scroll-margin-top:6.5rem}
+
+/* Chuppot */
+.chuppot{display:grid;grid-template-columns:minmax(16rem,.8fr) 1.6fr;gap:clamp(2rem,5vw,5rem);align-items:start;padding:clamp(5rem,10vw,9rem) clamp(1.25rem,6vw,6rem) clamp(4rem,7vw,6rem)}
+.chuppot__copy{position:sticky;top:7rem}
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+.mosaic figure{margin:0;overflow:hidden;border-radius:1.25rem;background:var(--surface);aspect-ratio:3/4.6}
+.mosaic figure:nth-child(2){transform:translateY(2.5rem)}
+.mosaic img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.mosaic figure:hover img{transform:scale(1.04)}
+
+/* Rails */
+.rail{padding:clamp(4rem,8vw,7rem) 0;border-top:1px solid var(--line)}
+.rail__head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:0 clamp(1.25rem,6vw,6rem) 2rem}
+.rail__hint{margin:0;color:var(--muted)}
+.rail__track{display:flex;gap:1rem;margin:0;padding:0 clamp(1.25rem,6vw,6rem) 1rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--sage) transparent;overscroll-behavior-x:contain}
+.rail__card{flex:0 0 clamp(15rem,26vw,21rem);aspect-ratio:3/4.4;scroll-snap-align:start;overflow:hidden;border-radius:999px 999px 1.25rem 1.25rem;background:var(--surface)}
+.rail__card img{width:100%;height:100%;object-fit:cover}
+
+
+/* Videos */
+.vcard{flex:0 0 clamp(14rem,24vw,19rem);aspect-ratio:9/16;scroll-snap-align:start;overflow:hidden;border-radius:1.5rem;background:var(--surface);border:1px solid var(--line)}
+.vcard video{width:100%;height:100%;object-fit:cover;background:var(--surface)}
+
+/* Process */
+.process{padding:clamp(5rem,9vw,8rem) clamp(1.25rem,6vw,6rem);background:var(--surface)}
+.process .h2{text-align:center}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,4rem);max-width:72rem;margin:3.5rem auto 0;padding:0;list-style:none}
+.steps li{padding-top:1rem;border-top:1px solid var(--line)}
+.steps .num{display:block;font-family:var(--serif);font-size:clamp(3.5rem,6vw,5.5rem);line-height:1;color:var(--blush)}
+.steps h3{margin:1rem 0 .5rem;font-weight:800;font-size:1.4rem}
+.steps p{margin:0;color:var(--muted);line-height:1.4;letter-spacing:-.005em}
+
+/* Contact */
+.contact{padding:clamp(5rem,10vw,9rem) 1.25rem;background:radial-gradient(ellipse at 50% 0%,rgb(242 201 196 / .12),transparent 60%),var(--bg)}
+.card{max-width:38rem;margin:0 auto;padding:clamp(2.5rem,6vw,4rem) clamp(1.5rem,5vw,3.5rem);border:1px solid var(--line);border-radius:2rem;text-align:center;background:rgb(31 26 22 / .7)}
+.card__flower{margin:0 auto 1.2rem;width:4.5rem;height:auto}
+.card h2{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(1.9rem,4.2vw,3rem);line-height:1;letter-spacing:-.02em}
+.card .lead{margin:1rem auto 2rem;max-width:30ch;font-size:1.1rem}
+.wa-big{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.1rem 1.5rem;border-radius:1.25rem;background:var(--ink);color:var(--bg);text-decoration:none;transition:background-color .25s}
+.wa-big:hover{background:var(--blush)}
+.wa-big svg{width:2rem;height:2rem;flex:none}
+.wa-big span{display:flex;flex-direction:column;text-align:start}
+.wa-big strong{font-size:1.2rem}
+.wa-big small{font-size:.95rem;opacity:.75}
+.alt{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:2rem}
+.phone{display:flex;flex-direction:column;align-items:center;text-decoration:none}
+.phone small{color:var(--muted);font-size:.9rem}
+.phone span{font-family:var(--serif);font-size:1.5rem;text-decoration:underline;text-decoration-color:var(--blush);text-underline-offset:.3em;text-decoration-thickness:1px}
+.insta{display:inline-flex;align-items:center;gap:.6rem;align-self:end;text-decoration:none;font-size:1.05rem}
+.insta i{display:grid;place-items:center;width:2.4rem;height:2.4rem;border:1.5px solid var(--sage);border-radius:50%;color:var(--sage);transition:background-color .25s,color .25s}
+.insta:hover i{background:var(--sage);color:var(--bg)}
+.insta svg{width:1.2rem;height:1.2rem}
+
+.foot{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:3rem 1rem 6rem;border-top:1px solid var(--line);color:var(--muted)}
+.foot img{width:84px;height:auto}
+.foot p{margin:0;font-size:.95rem}
+.dock{display:none}
+
+@media (max-width:860px){
+  .hdr{gap:.75rem}
+  .hdr__nav{gap:.7rem}
+  .hdr__nav a{font-size:.88rem;white-space:nowrap}
+  .hdr__logo img{width:76px}
+  .hdr{padding:.8rem .9rem}
+  .hdr__cta span{display:none}
+  .hdr__cta{padding:.6rem}
+  .route{right:.2rem}
+  .route button{padding:.6rem .7rem;font-size:.95rem}
+  .stage__shade{background:linear-gradient(to top,var(--bg) 0%,rgb(21 18 15 / .85) 34%,transparent 62%)}
+  .chapter{padding:0 1.25rem}
+  .chapter[data-ch="0"]{padding-top:46vh}
+  .copy{width:100%}
+  .copy::before{inset:-2.5rem -1.5rem;background:radial-gradient(ellipse at center,rgb(21 18 15 / .82) 0%,rgb(21 18 15 / .55) 55%,transparent 80%)}
+  .chapter h1,.chapter h2{font-size:clamp(2rem,9vw,3.2rem);line-height:.98}
+  .chapter h1{font-size:min(10.5vw,3.2rem)}
+  .chapter p.body{margin-top:.6rem;font-size:1rem;line-height:1.4}
+  .tags{margin-top:.8rem}
+  .hero-cta{margin-top:1.1rem;font-size:1rem}
+  .chuppot{grid-template-columns:1fr}
+  .chuppot__copy{position:static}
+  .mosaic{grid-template-columns:repeat(2,1fr)}
+  .mosaic figure:nth-child(2){transform:none}
+  .mosaic figure:nth-child(n+5){display:none}
+  .steps{grid-template-columns:1fr}
+  .dock{position:fixed;bottom:calc(1rem + env(safe-area-inset-bottom));left:1rem;z-index:60;display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--blush);color:var(--bg);box-shadow:0 8px 30px rgb(0 0 0 / .45)}
+  .dock svg{width:1.8rem;height:1.8rem}
+  .cue{bottom:calc(1.1rem + env(safe-area-inset-bottom))}
+}
+@media (max-height:700px) and (max-width:860px){
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .cue svg{animation:none}
+  .mosaic img,.hero-cta{transition:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2A9.7 9.7 0 0 0 3.6 16.8L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+</svg>
+
+<header class="hdr">
+  <a class="hdr__logo" href="#top" aria-label="פרחי שרון, לראש הדף"><img src="logo.png" alt="פרחי שרון" width="264" height="140"></a>
+  <nav class="route" aria-label="פרקים">
+    <button type="button" data-go="0">מרכזי שולחן</button>
+    <button type="button" data-go="1">חופה</button>
+    <button type="button" data-go="v">סרטונים</button>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="journey" id="journey" aria-label="מרכזי שולחן וחופות">
+    <div class="stage">
+      <div class="progress" aria-hidden="true"><span></span></div>
+      <video class="film" id="film" muted playsinline preload="auto" poster="film-poster.jpg" aria-hidden="true" tabindex="-1"></video>
+      <div class="stage__shade" aria-hidden="true"></div>
+    </div>
+    <div class="story">
+      <article class="chapter" data-ch="0"><div class="copy">
+        <p class="kicker">פרחי שרון · עיצוב פרחוני לאירועים</p>
+        <h1>אירוע שנשאר בלב</h1>
+        <p class="body">עיצוב חופות ומרכזי שולחן לחתונות ולאירועים, בהתאמה אישית בשבילכם.</p>
+        <ul class="tags"><li>פרחים טריים</li><li>עיצוב מדויק</li></ul>
+        <a class="hero-cta wa-link" href="#" target="_blank" rel="noopener"><img src="flower.png" alt="" width="129" height="128"><span>דברו איתי בוואטסאפ</span></a>
+      </div></article>
+      <article class="chapter" data-ch="t" id="ch-table"><div class="copy">
+        <p class="kicker">מרכזי שולחן</p>
+        <h2>שולחן שמזמין לשבת</h2>
+        <p class="body">סידורים שופעים, אגרטלי זכוכית ונרות, מותאמים לאולם, לשולחנות ולצבעים שבחרתם.</p>
+      </div></article>
+      <article class="chapter" data-ch="1" id="ch-chuppah"><div class="copy">
+        <p class="kicker">עיצוב חופה</p>
+        <h2>החופה, הרגע שכולם זוכרים</h2>
+        <p class="body">חופת החלומות שלכם, בדיוק כמו שדמיינתם.</p>
+      </div></article>
+    </div>
+  </section>
+
+  <section class="chuppot" id="chuppot" aria-labelledby="chuppot-t">
+    <div class="chuppot__copy">
+      <p class="label">מהאירועים שלנו</p>
+      <h2 class="h2" id="chuppot-t">חופה</h2>
+      <p class="lead">כל חופה נבנית סביב המקום ובני הזוג: גן פתוח, אוהל עם נורות או אולם ערב. וילונות, זר עליון שופע וזרי צד, בצבעים שמתאימים לכם.</p>
+    </div>
+    <div class="mosaic">
+      <figure><img loading="lazy" src="chuppah-aisle.webp" alt="חופה מוארת בסוף שביל לבן עם נרות בכוסות זכוכית" width="901" height="1600"></figure>
+      <figure><img loading="lazy" src="chuppah-bouquet.webp" alt="זר ורדים לבנים וורודים על וילון החופה" width="901" height="1600"></figure>
+      <figure><img loading="lazy" src="chuppah-garden.webp" alt="חופה לבנה בגן עם זרי ורדים לבנים לאורך השביל" width="1200" height="1600"></figure>
+      <figure><img loading="lazy" src="chuppah-front.webp" alt="חופה עם וילונות לבנים וזר ורדים לבן וורוד, מתחת לשרשרת נורות" width="901" height="1600"></figure>
+      <figure><img loading="lazy" src="chuppah-corner.webp" alt="פינת החופה עם זר צד וורדים" width="901" height="1600"></figure>
+      <figure><img loading="lazy" src="tall-vase.webp" alt="זר ליזיאנטוס לבן באגרטל זכוכית גבוה" width="901" height="1600"></figure>
+    </div>
+  </section>
+
+  <section class="rail" id="merkazim" aria-labelledby="merkazim-t">
+    <div class="rail__head">
+      <h2 class="h2" id="merkazim-t">מרכזי שולחן</h2>
+      <p class="rail__hint">מדפדפים הצידה לעוד עבודות</p>
+    </div>
+    <ul class="rail__track">
+      <li class="rail__card"><img loading="lazy" src="gold-stand.webp" alt="מרכז שולחן גבוה על מעמד זהב עם ורדים לבנים וירק" width="901" height="1600"></li>
+      <li class="rail__card"><img loading="lazy" src="table-line.webp" alt="שולחן אבירים עם סידורי פרחים לבנים ופמוטי זכוכית" width="901" height="1600"></li>
+      <li class="rail__card"><img loading="lazy" src="oil-candles.webp" alt="שולחן עגול עם פמוטי שמן מזכוכית וזרים לבנים" width="1200" height="1600"></li>
+      <li class="rail__card"><img loading="lazy" src="floating-candles.webp" alt="נרות צפים באגרטלי זכוכית גבוהים מלאים בגיבסנית" width="945" height="1412"></li>
+      <li class="rail__card"><img loading="lazy" src="glass-candelabra.webp" alt="מנורת זכוכית עם נרות באולם ערב ליד זרים לבנים גבוהים" width="850" height="840"></li>
+      <li class="rail__card"><img loading="lazy" src="candles-gypsophila.webp" alt="נרות לבנים בכוסות זכוכית מוקפים בגיבסנית" width="900" height="782"></li>
+      <li class="rail__card"><img loading="lazy" src="table-urn.webp" alt="סידור פרחים לבנים בכלי קרמיקה על שולחן עץ" width="901" height="1600"></li>
+      <li class="rail__card"><img loading="lazy" src="tall-candles.webp" alt="פמוטים גבוהים עם נרות על שולחן ערוך באולם" width="945" height="1580"></li>
+      <li class="rail__card"><img loading="lazy" src="small-vase.webp" alt="זר ורדים לבנים באגרטל זכוכית על שולחן עץ" width="901" height="1600"></li>
+      <li class="rail__card"><img loading="lazy" src="table-hall.webp" alt="שולחן ערוך באולם עם סידור פרחים לבן" width="901" height="1600"></li>
+    </ul>
+  </section>
+
+  <section class="process" aria-labelledby="process-t">
+    <h2 class="h2" id="process-t">איך זה עובד</h2>
+    <ol class="steps">
+      <li><span class="num" aria-hidden="true">1</span><h3>שיחה ראשונה</h3><p>מספרים לי על האירוע, האולם, התאריך והאווירה שאתם חולמים עליה.</p></li>
+      <li><span class="num" aria-hidden="true">2</span><h3>התאמה אישית</h3><p>בוחרים יחד פרחים, צבעים, נרות וכלים, ומקבלים הצעה מסודרת לחופה ולשולחנות.</p></li>
+      <li><span class="num" aria-hidden="true">3</span><h3>ביום האירוע</h3><p>אני מגיע, מקים ומעצב הכול במקום.</p></li>
+    </ol>
+  </section>
+
+  <section class="rail" id="videos" data-auto="1" aria-labelledby="videos-t">
+    <div class="rail__head">
+      <h2 class="h2" id="videos-t">סרטונים מהאירועים</h2>
+      <p class="rail__hint">מדפדפים הצידה ולוחצים לצפייה</p>
+    </div>
+    <ul class="rail__track">
+      <li class="vcard"><video controls playsinline preload="none" poster="event-1.jpg" src="event-1.mp4" aria-label="מרכז שולחן על מעמד זהב באולם"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-2.jpg" src="event-2.mp4" aria-label="חופה עם זר ורדים בלבן וורוד"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-3.jpg" src="event-3.mp4" aria-label="מרכזי שולחן באולם ערב"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-4.jpg" src="event-4.mp4" aria-label="חופה מוארת בסוף שביל לבן"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-5.jpg" src="event-5.mp4" aria-label="פינת ישיבה ועיצוב בגן האירועים"></video></li>
+    </ul>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-t">
+    <div class="card">
+      <img class="card__flower" src="flower.png" alt="" width="129" height="128">
+      <h2 id="contact-t">בואו נדבר על האירוע שלכם</h2>
+      <p class="lead">שלחו הודעה עם התאריך והמקום, ואחזור אליכם עם רעיונות והצעה.</p>
+      <a class="wa-big wa-link" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg><span><strong>שליחת הודעה בוואטסאפ</strong></span></a>
+      <div class="alt">
+        <a class="phone" href="tel:+972546123366"><small>או בטלפון</small><span dir="ltr">054-6123366</span></a>
+        <a class="insta" href="https://www.instagram.com/sharony.flowers/" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></i><span dir="ltr">@sharony.flowers</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <img src="logo.png" alt="פרחי שרון" width="264" height="140">
+  <p>עיצוב פרחוני לחופות ולאירועים</p>
+</footer>
+
+<a class="dock wa-link" href="#" target="_blank" rel="noopener" aria-label="שליחת הודעה בוואטסאפ לשרון"><svg><use href="#wa"/></svg></a>
+<a class="cue" id="cue" href="#chuppot"><span>לגלריה</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></a>
+
+<script>
+(function(){
+  var WA = "https://wa.me/972546123366?text=" + encodeURIComponent("היי שרון, הגעתי מהאתר ואשמח לשמוע על עיצוב פרחים לאירוע שלנו");
+  document.querySelectorAll(".wa-link").forEach(function(a){ a.href = WA; });
+
+  // Scroll-scrubbed film: centerpieces (first 62%), then the chuppah
+  var film = document.getElementById("film");
+  var SPLIT = 0.62, ready = false, target = 0, shown = -1;
+  function attach(url){ film.src = url; film.load(); }
+  try {
+    fetch("film.mp4").then(function(r){ if(!r.ok) throw 0; return r.blob(); })
+      .then(function(bl){ attach(URL.createObjectURL(bl)); })
+      .catch(function(){ attach("film.mp4"); });
+  } catch(e){ attach("film.mp4"); }
+  film.addEventListener("loadedmetadata", function(){ ready = true; seek(); });
+  function seek(){
+    if (!ready || !film.duration) return;
+    var t = Math.min(film.duration - 0.05, target * film.duration);
+    if (Math.abs(t - shown) < 0.01) return;
+    if (film.seeking){ return; }
+    film.currentTime = t; shown = t;
+  }
+  film.addEventListener("seeked", seek);
+  // iOS needs a user gesture before it paints seeked frames reliably
+  var primed = false;
+  function prime(){ if (primed) return; primed = true; var pr = film.play(); if (pr && pr.then) pr.then(function(){ film.pause(); seek(); }).catch(function(){}); }
+  window.addEventListener("touchstart", prime, {passive:true, once:true});
+  window.addEventListener("pointerdown", prime, {passive:true, once:true});
+
+  var journey = document.getElementById("journey");
+  var copies = Array.prototype.slice.call(document.querySelectorAll(".copy"));
+  var routeBtns = document.querySelectorAll(".route button");
+  var bar = document.querySelector(".progress span");
+  var cue = document.getElementById("cue");
+  var hdr = document.querySelector(".hdr");
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var ticking = false, lastCh = -1;
+
+  function progress(){
+    var r = journey.getBoundingClientRect();
+    var total = journey.offsetHeight - window.innerHeight;
+    return Math.min(1, Math.max(0, -r.top / total));
+  }
+  function render(){
+    ticking = false;
+    var p = progress();
+    target = p; seek();
+    var vh = window.innerHeight;
+    copies.forEach(function(c){
+      var r = c.getBoundingClientRect(), mid = (r.top + r.bottom) / 2 / vh;
+      var o = mid < 0.5 ? (mid + 0.05) / 0.35 : (1.08 - mid) / 0.3;
+      c.style.opacity = Math.max(0, Math.min(1, o)).toFixed(3);
+    });
+    var cr = document.getElementById("ch-chuppah").firstElementChild.getBoundingClientRect();
+    var ch = cr.top < window.innerHeight * 0.85 ? 1 : 0;
+    var mid = window.innerHeight * 0.5;
+    function at(id){ var r = document.getElementById(id).getBoundingClientRect(); return r.top < mid && r.bottom > mid; }
+    if (at("chuppot")) ch = 1; else if (at("merkazim")) ch = 0; else if (document.getElementById("videos").getBoundingClientRect().top < mid) ch = 2;
+    if (ch !== lastCh){
+      routeBtns.forEach(function(b, k){ if (k === ch) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      lastCh = ch;
+    }
+    bar.style.transform = "scaleX(" + p.toFixed(4) + ")";
+    cue.classList.toggle("is-hidden", journey.getBoundingClientRect().bottom < window.innerHeight * 1.05);
+    hdr.classList.toggle("is-solid", journey.getBoundingClientRect().bottom < 80);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  window.addEventListener("resize", onScroll);
+  routeBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = {"0":"merkazim","1":"chuppot","v":"videos"}[b.getAttribute("data-go")];
+      document.getElementById(id).scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+    });
+  });
+
+  // Endless galleries: three copies of the cards, quietly re-centred so the end never shows
+  function endless(sec, auto){
+    var track = sec.querySelector(".rail__track");
+    var orig = Array.prototype.slice.call(track.children);
+    if (!orig.length) return;
+    [0,1].forEach(function(){ orig.forEach(function(li){ var c = li.cloneNode(true); c.setAttribute("aria-hidden","true"); c.querySelectorAll("img,video").forEach(function(m){ m.setAttribute("tabindex","-1"); }); track.appendChild(c); }); });
+    var rtl = getComputedStyle(track).direction === "rtl", sign = rtl ? -1 : 1;
+    var setW = 0;
+    function measure(){ setW = track.children[orig.length].offsetLeft - track.children[0].offsetLeft; setW = Math.abs(setW); }
+    function pos(){ return Math.abs(track.scrollLeft); }
+    function setPos(x){ track.style.scrollSnapType = "none"; track.scrollLeft = sign * x; requestAnimationFrame(function(){ track.style.scrollSnapType = ""; }); }
+    function recentre(){ if (!setW) return; var x = pos(); if (x >= setW * 2) setPos(x - setW); else if (x < setW * 0.5) setPos(x + setW); }
+    function init(){ measure(); if (setW) setPos(setW); }
+    if (document.readyState === "complete") init(); else window.addEventListener("load", init);
+    window.addEventListener("resize", function(){ var r = setW ? (pos() % setW) : 0; measure(); setPos(setW + r); });
+    var t; track.addEventListener("scroll", function(){ clearTimeout(t); t = setTimeout(recentre, 140); }, {passive:true});
+    if (!auto) return;
+    var vids = track.querySelectorAll("video"), hold = 0, visible = false;
+    function busy(){ for (var i = 0; i < vids.length; i++){ if (!vids[i].paused) return true; } return Date.now() < hold; }
+    ["pointerdown","touchstart","wheel"].forEach(function(ev){ track.addEventListener(ev, function(){ hold = Date.now() + 8000; }, {passive:true}); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }, {threshold: 0.3}).observe(sec); else visible = true;
+    setInterval(function(){
+      if (!visible || busy() || reduce || !setW) return;
+      var w = track.children[1].offsetLeft - track.children[0].offsetLeft;
+      track.scrollBy({left: w, behavior: "smooth"});
+    }, 3200);
+  }
+  endless(document.getElementById("merkazim"), true);
+  endless(document.getElementById("videos"), true);
+
+  render();
+})();
+</script>
+</body>
+</html>
