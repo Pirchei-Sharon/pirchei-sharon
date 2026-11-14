@@ -183,6 +183,9 @@ section[id]{scroll-margin-top:6.5rem}
   .hero{grid-template-columns:1fr}
   .hero__copy{padding:4rem 1.5rem 3rem}
   .hero__photo{width:100%;min-height:0;height:auto;aspect-ratio:4/5;order:-1}
+  .intro{display:none}
+  .cue{display:none}
+  .hero{padding-top:6.4rem}
 }
 
 /* Process */
@@ -399,6 +402,7 @@ section[id]{scroll-margin-top:6.5rem}
   var routeBtns = document.querySelectorAll(".route button");
   var cue = document.getElementById("cue");
   var hdr = document.querySelector(".hdr");
+  var introEl = document.querySelector(".intro");
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var ticking = false, lastCh = -1;
 
@@ -412,9 +416,10 @@ section[id]{scroll-margin-top:6.5rem}
       lastCh = ch;
     }
     var jb = journey.getBoundingClientRect().bottom;
-    cue.classList.toggle("is-hidden", window.scrollY > window.innerHeight * 0.5);
-    hdr.classList.toggle("is-solid", window.scrollY > window.innerHeight * 0.85);
-    var oi = window.scrollY < window.innerHeight * 0.6; hdr.classList.toggle("on-intro", oi); cue.classList.toggle("on-intro", oi);
+    cue.classList.toggle("is-hidden", window.scrollY > Math.max(ih, window.innerHeight) * 0.5);
+    var ih = introEl ? introEl.offsetHeight : 0;
+    hdr.classList.toggle("is-solid", ih === 0 || window.scrollY > ih * 0.85);
+    var oi = ih > 0 && window.scrollY < ih * 0.6; hdr.classList.toggle("on-intro", oi); cue.classList.toggle("on-intro", oi);
   }
   function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
   window.addEventListener("scroll", onScroll, {passive:true});
