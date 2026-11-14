@@ -107,6 +107,7 @@ section[id]{scroll-margin-top:6.5rem}
 
 /* Videos */
 .vcard{flex:0 0 clamp(14rem,24vw,19rem);aspect-ratio:9/16;scroll-snap-align:start;overflow:hidden;border-radius:1.5rem;background:var(--surface);border:1px solid var(--line)}
+.vcard--wide{flex-basis:clamp(20rem,44vw,34rem);aspect-ratio:16/9;align-self:center}
 .vcard video{width:100%;height:100%;object-fit:cover;background:var(--surface)}
 
 
@@ -118,7 +119,7 @@ section[id]{scroll-margin-top:6.5rem}
 .svc__hero img{width:100%;height:100%;object-fit:cover}
 .svc__cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;color:var(--rose);font-weight:800;font-size:1.1rem;text-decoration:none;border-bottom:1px solid rgb(185 115 107 / .45);padding-bottom:.25rem;transition:gap .25s,border-color .25s}
 .svc__cta:hover{gap:.9rem;border-color:var(--blush)}
-.gal{display:flex;flex-wrap:wrap;gap:1.2rem;--row:clamp(26rem,42vw,40rem);max-width:68rem;margin-inline:auto}
+.gal{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem;--row:clamp(24rem,38vw,35rem);max-width:68rem;margin-inline:auto}
 .gal figure{position:relative;margin:0;overflow:hidden;border-radius:1.1rem;background:var(--surface);flex:var(--a) 1 calc(var(--a) * var(--row));aspect-ratio:var(--a)}
 .gal figure[hidden]{display:none}
 .gal img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
@@ -161,7 +162,9 @@ section[id]{scroll-margin-top:6.5rem}
 .hero__cta{display:inline-block;margin-top:2.4rem;padding:.9rem 1.8rem;border:1px solid var(--ink);border-radius:999px;color:var(--ink);font-weight:600;letter-spacing:.03em;text-decoration:none;transition:background-color .3s,color .3s,border-color .3s}
 .hero__cta:hover{background:var(--blush);border-color:var(--blush);color:var(--ink)}
 .hero__photo{margin:0;aspect-ratio:3/4;border-radius:999px 999px 0 0;overflow:hidden}
+.hero__photo{position:relative}
 .hero__photo img{width:100%;height:100%;object-fit:cover}
+.hero__down{display:none}
 @media (max-width:860px){
   .hero{grid-template-columns:1fr;gap:2.5rem;padding:9rem 1.5rem 6rem}
   .hero h1{font-size:min(11.5vw,3.4rem)}
@@ -185,8 +188,25 @@ section[id]{scroll-margin-top:6.5rem}
   .hero__photo{width:100%;min-height:0;height:auto;aspect-ratio:4/5;order:-1}
   .intro{display:none}
   .cue{display:none}
+  .hero__down{position:absolute;bottom:1rem;left:50%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.3rem;transform:translateX(-50%);color:#fff;font-weight:800;font-size:.95rem;text-decoration:none;text-shadow:0 1px 8px rgb(0 0 0 / .5)}
+  .hero__down svg{width:3.2rem;height:3.2rem;padding:.55rem;border:1.5px solid rgb(255 255 255 / .8);border-radius:50%;background:rgb(0 0 0 / .15);animation:bob 1.6s ease-in-out infinite}
   .hero{padding-top:6.4rem}
 }
+
+
+/* Featured photos + full "camera roll" gallery */
+.gal figure[data-extra]{display:none}
+.gal__all{display:block;margin:2rem auto 0;padding:.9rem 2rem;border:1px solid var(--ink);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-weight:700;font-size:1rem;letter-spacing:.02em;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
+.gal__all:hover{background:var(--blush);border-color:var(--blush)}
+.roll{position:fixed;inset:0;z-index:90;overflow-y:auto;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .3s;overscroll-behavior:contain}
+.roll.is-open{opacity:1;pointer-events:auto}
+.roll__bar{position:sticky;top:0;z-index:2;display:flex;justify-content:flex-end;padding:.8rem 1rem;background:rgb(251 247 242 / .92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.roll__close{display:grid;place-items:center;width:2.8rem;height:2.8rem;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink);font:inherit;font-size:1.4rem;line-height:1;cursor:pointer}
+.roll__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));gap:4px;padding:0 4px 4px}
+.roll__grid button{display:block;padding:0;border:0;aspect-ratio:1;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.roll__grid img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:860px){.roll__grid{grid-template-columns:repeat(3,1fr);gap:2px;padding:0 2px 2px}}
+.lb{z-index:120}
 
 /* Process */
 .process{padding:clamp(5rem,9vw,8rem) clamp(1.25rem,6vw,6rem);background:var(--surface)}
@@ -291,7 +311,7 @@ section[id]{scroll-margin-top:6.5rem}
       <p class="hero__meta">פרחים טריים <span aria-hidden="true">·</span> עיצוב מדויק</p>
       <a class="hero__cta wa-link" href="#" target="_blank" rel="noopener">לתיאום שיחה בוואטסאפ</a>
     </div>
-    <figure class="hero__photo"><img src="chuppah-bouquet.webp" alt="זר ורדים לבנים וורודים על וילון החופה, מקרוב" width="901" height="1600"></figure>
+    <figure class="hero__photo"><a class="hero__down" href="#chuppot" aria-label="גללו למטה לגלריה"><span>גללו למטה</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></a><img src="chuppah-bouquet.webp" alt="זר ורדים לבנים וורודים על וילון החופה, מקרוב" width="901" height="1600"></figure>
   </section>
 
   <section class="svc" id="chuppot" aria-labelledby="chuppot-t">
@@ -301,17 +321,21 @@ section[id]{scroll-margin-top:6.5rem}
         <p class="label">מהאירועים שלנו</p>
         <h2 class="h2" id="chuppot-t">חופה</h2>
         <p class="lead">כל חופה נבנית סביב המקום ובני הזוג: גן פתוח, אוהל עם נורות או אולם ערב. וילונות, זר עליון שופע וזרי צד, בצבעים שמתאימים לכם.</p>
-        <a class="svc__cta wa-link" href="#" target="_blank" rel="noopener">בואו נתכנן את החופה שלכם <span aria-hidden="true">←</span></a>
       </div>
     </div>
     <div class="gal">
-      <figure style="--a:0.7500"><img loading="lazy" src="chuppah-garden.webp" alt="חופה לבנה בגן עם זרי ורדים לבנים לאורך השביל" width="1200" height="1600"></figure>
+      <figure style="--a:1.7766"><img loading="lazy" src="chuppah-side-wide.webp" alt="זר צד של ורדים לבנים וורודים על וילון החופה, בין דקלים" width="1400" height="788"></figure>
+      <figure style="--a:0.5625"><img loading="lazy" src="chuppah-garland-corner.webp" alt="חופה עם זר עליון של ורדים בלבן ואפרסק וזר צד על הווילון" width="900" height="1600"></figure>
       <figure style="--a:0.5631"><img loading="lazy" src="chuppah-bouquet.webp" alt="זר ורדים לבנים וורודים על וילון החופה" width="901" height="1600"></figure>
-      <figure style="--a:0.7500"><img loading="lazy" src="chuppah-walkway.webp" alt="חופה עם זר עליון של ורדים לבנים וורודים, שביל לבן ונרות בזכוכית" width="1200" height="1600"></figure>
-      <figure style="--a:0.7500"><img loading="lazy" src="chuppah-walkway-far.webp" alt="מדרגות לבנות ושביל אל החופה, מוקפים זרים לבנים, דקלים ושרשראות נורות" width="1200" height="1600"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="chuppah-aisle.webp" alt="חופה מוארת בסוף שביל לבן עם נרות בכוסות זכוכית" width="901" height="1600"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="chuppah-corner.webp" alt="פינת החופה עם זר צד וורדים" width="901" height="1600"></figure>
+      <figure style="--a:0.7500"><img loading="lazy" src="chuppah-garden.webp" alt="חופה לבנה בגן עם זרי ורדים לבנים לאורך השביל" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="chuppah-corner.webp" alt="פינת החופה עם זר צד וורדים" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.7500"><img loading="lazy" src="chuppah-walkway.webp" alt="חופה עם זר עליון של ורדים לבנים וורודים, שביל לבן ונרות בזכוכית" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:0.7500"><img loading="lazy" src="chuppah-walkway-far.webp" alt="מדרגות לבנות ושביל אל החופה, מוקפים זרים לבנים, דקלים ושרשראות נורות" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="chuppah-aisle.webp" alt="חופה מוארת בסוף שביל לבן עם נרות בכוסות זכוכית" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5625"><img loading="lazy" src="chuppah-garland.webp" alt="זר עליון של ורדים בלבן, שמנת ואפרסק על חופה עם וילונות לבנים" width="900" height="1600"></figure>
+      <figure data-extra style="--a:0.5625"><img loading="lazy" src="chuppah-side-bouquet.webp" alt="זר צד שופע של ורדים לבנים וורודים עם עלים ארוכים על וילון החופה" width="900" height="1600"></figure>
     </div>
+    <button type="button" class="gal__all" data-sec="chuppot">לצפייה בגלריה המלאה (10)</button>
   </section>
 
   <section class="svc svc--flip" id="merkazim" aria-labelledby="merkazim-t">
@@ -321,24 +345,28 @@ section[id]{scroll-margin-top:6.5rem}
         <p class="label">לכל שולחן</p>
         <h2 class="h2" id="merkazim-t">מרכזי שולחן</h2>
         <p class="lead">סידורים נמוכים ושופעים, בקבוקונים עם פרחים בודדים, גיבסנית ונרות בזכוכית. כל שולחן מקבל את הסגנון שמתאים לכם ולאולם.</p>
-        <a class="svc__cta wa-link" href="#" target="_blank" rel="noopener">בואו נעצב את השולחנות שלכם <span aria-hidden="true">←</span></a>
       </div>
     </div>
     <div class="gal">
+      <figure style="--a:0.9662"><img loading="lazy" src="urn-white-roses.webp" alt="ורדים לבנים ופלוקס בכד קרמיקה לבן על שולחן ארוך" width="1400" height="1449"></figure>
+      <figure style="--a:0.6431"><img loading="lazy" src="vase-lisianthus-tall.webp" alt="ליזיאנטוס לבן וירק באגרטל זכוכית גבוה על שולחן עגול" width="1029" height="1600"></figure>
+      <figure style="--a:0.5625"><img loading="lazy" src="table-crystal-vase.webp" alt="ורדים לבנים בבקבוק קריסטל ליד פמוט נר גבוה, באולם עם מנורות קש" width="900" height="1600"></figure>
+      <figure style="--a:0.5625"><img loading="lazy" src="table-long-candles.webp" alt="שולחן אבירים ארוך עם סידורי פרחים לבנים ופמוטי נרות גבוהים" width="900" height="1600"></figure>
       <figure style="--a:1.3333"><img loading="lazy" src="table-bottles.webp" alt="שולחן עץ ארוך עם בקבוקוני זכוכית, ורדים ורודים ופמוטי נרות גבוהים" width="1200" height="900"></figure>
-      <figure style="--a:1.3333"><img loading="lazy" src="centerpiece-low.webp" alt="סידור פרחים נמוך עם ורדים לבנים וורודים וירק על שולחן עץ" width="1200" height="900"></figure>
-      <figure style="--a:0.6693"><img loading="lazy" src="floating-candles.webp" alt="נרות צפים באגרטלי זכוכית גבוהים מלאים בגיבסנית" width="945" height="1412"></figure>
-      <figure style="--a:1.3333"><img loading="lazy" src="centerpiece-hall.webp" alt="סידורי פרחים נמוכים על שולחנות עץ באולם עם תאורה סגולה" width="1200" height="900"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="table-line.webp" alt="שולחן אבירים עם סידורי פרחים לבנים ופמוטי זכוכית" width="901" height="1600"></figure>
-      <figure style="--a:0.7500"><img loading="lazy" src="oil-candles.webp" alt="שולחן עגול עם פמוטי שמן מזכוכית וזרים לבנים" width="1200" height="1600"></figure>
-      <figure style="--a:1.0119"><img loading="lazy" src="glass-candelabra.webp" alt="מנורת זכוכית עם נרות באולם ערב ליד זרים לבנים גבוהים" width="850" height="840"></figure>
-      <figure style="--a:1.1509"><img loading="lazy" src="candles-gypsophila.webp" alt="נרות לבנים בכוסות זכוכית מוקפים בגיבסנית" width="900" height="782"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="table-urn.webp" alt="סידור פרחים לבנים בכלי קרמיקה על שולחן עץ" width="901" height="1600"></figure>
-      <figure style="--a:0.5981"><img loading="lazy" src="tall-candles.webp" alt="פמוטים גבוהים עם נרות על שולחן ערוך באולם" width="945" height="1580"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="small-vase.webp" alt="זר ורדים לבנים באגרטל זכוכית על שולחן עץ" width="901" height="1600"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="tall-vase.webp" alt="זר ליזיאנטוס לבן באגרטל זכוכית גבוה" width="901" height="1600"></figure>
-      <figure style="--a:0.5631"><img loading="lazy" src="table-hall.webp" alt="שולחן ערוך באולם עם סידור פרחים לבן" width="901" height="1600"></figure>
+      <figure data-extra style="--a:1.3333"><img loading="lazy" src="centerpiece-low.webp" alt="סידור פרחים נמוך עם ורדים לבנים וורודים וירק על שולחן עץ" width="1200" height="900"></figure>
+      <figure data-extra style="--a:0.6693"><img loading="lazy" src="floating-candles.webp" alt="נרות צפים באגרטלי זכוכית גבוהים מלאים בגיבסנית" width="945" height="1412"></figure>
+      <figure data-extra style="--a:1.3333"><img loading="lazy" src="centerpiece-hall.webp" alt="סידורי פרחים נמוכים על שולחנות עץ באולם עם תאורה סגולה" width="1200" height="900"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="table-line.webp" alt="שולחן אבירים עם סידורי פרחים לבנים ופמוטי זכוכית" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.7500"><img loading="lazy" src="oil-candles.webp" alt="שולחן עגול עם פמוטי שמן מזכוכית וזרים לבנים" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:1.0119"><img loading="lazy" src="glass-candelabra.webp" alt="מנורת זכוכית עם נרות באולם ערב ליד זרים לבנים גבוהים" width="850" height="840"></figure>
+      <figure data-extra style="--a:1.1509"><img loading="lazy" src="candles-gypsophila.webp" alt="נרות לבנים בכוסות זכוכית מוקפים בגיבסנית" width="900" height="782"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="table-urn.webp" alt="סידור פרחים לבנים בכלי קרמיקה על שולחן עץ" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5981"><img loading="lazy" src="tall-candles.webp" alt="פמוטים גבוהים עם נרות על שולחן ערוך באולם" width="945" height="1580"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="small-vase.webp" alt="זר ורדים לבנים באגרטל זכוכית על שולחן עץ" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="tall-vase.webp" alt="זר ליזיאנטוס לבן באגרטל זכוכית גבוה" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="table-hall.webp" alt="שולחן ערוך באולם עם סידור פרחים לבן" width="901" height="1600"></figure>
     </div>
+    <button type="button" class="gal__all" data-sec="merkazim">לצפייה בגלריה המלאה (17)</button>
   </section>
 
   <section class="process" aria-labelledby="process-t">
@@ -356,6 +384,7 @@ section[id]{scroll-margin-top:6.5rem}
       <p class="rail__hint">מדפדפים הצידה ולוחצים לצפייה</p>
     </div>
     <ul class="rail__track">
+      <li class="vcard vcard--wide"><video controls playsinline preload="none" poster="event-7.jpg" src="event-7.mp4" aria-label="זר צד על וילון החופה בגן"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-6.jpg" src="event-6.mp4" aria-label="אגרטל גיבסנית וורדים על שולחן באולם"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-2.jpg" src="event-2.mp4" aria-label="חופה עם זר ורדים בלבן וורוד"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-3.jpg" src="event-3.mp4" aria-label="מרכזי שולחן באולם ערב"></video></li>
@@ -383,6 +412,7 @@ section[id]{scroll-margin-top:6.5rem}
   <p>עיצוב פרחוני לחופות ולאירועים</p>
 </footer>
 
+<div class="roll" id="roll" role="dialog" aria-modal="true" aria-label="גלריה מלאה" hidden><div class="roll__bar"><button type="button" class="roll__close" aria-label="סגירת הגלריה">×</button></div><div class="roll__grid"></div></div>
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="תמונה מוגדלת" hidden>
   <img class="lb__img" alt="">
   <button type="button" class="lb__btn lb__close" aria-label="סגירה">×</button>
@@ -480,12 +510,13 @@ section[id]{scroll-margin-top:6.5rem}
     var img = lb.querySelector(".lb__img"), cnt = lb.querySelector(".lb__count"), list = [], i = 0, last = null;
     function show(){ var el = list[i]; img.src = el.getAttribute("src"); img.alt = el.alt; cnt.textContent = (i + 1) + " / " + list.length; }
     function open(gal, el){
-      list = Array.prototype.filter.call(gal.querySelectorAll("img"), function(x){ return !x.closest("[hidden]"); });
+      list = Array.prototype.filter.call(gal.querySelectorAll("img"), function(x){ return !x.closest("[hidden]") && !x.closest("[data-extra]"); });
       i = Math.max(0, list.indexOf(el)); last = document.activeElement; show();
       lb.hidden = false; requestAnimationFrame(function(){ lb.classList.add("is-open"); });
       document.documentElement.style.overflow = "hidden"; lb.querySelector(".lb__close").focus();
     }
-    function close(){ lb.classList.remove("is-open"); document.documentElement.style.overflow = ""; setTimeout(function(){ lb.hidden = true; }, 300); if (last) last.focus(); }
+    window.__lbOpenList = function(imgs, k){ list = imgs; i = k; last = document.activeElement; show(); lb.hidden = false; requestAnimationFrame(function(){ lb.classList.add("is-open"); }); document.documentElement.style.overflow = "hidden"; lb.querySelector(".lb__close").focus(); };
+    function close(){ lb.classList.remove("is-open"); if (document.getElementById("roll").hidden) document.documentElement.style.overflow = ""; setTimeout(function(){ lb.hidden = true; }, 300); if (last) last.focus(); }
     function step(d){ i = (i + d + list.length) % list.length; show(); }
     document.querySelectorAll(".gal").forEach(function(gal){
       gal.querySelectorAll("figure").forEach(function(f){
@@ -505,6 +536,50 @@ section[id]{scroll-margin-top:6.5rem}
     var x0 = null;
     lb.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; }, {passive:true});
     lb.addEventListener("touchend", function(e){ if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) step(dx > 0 ? 1 : -1); });
+  })();
+
+  // Justified gallery rows on wide screens: every photo keeps its own shape, rows fill the width
+  function justify(){
+    document.querySelectorAll(".gal").forEach(function(gal){
+      var figs = Array.prototype.filter.call(gal.children, function(f){ return f.tagName === "FIGURE" && !f.hidden && !f.hasAttribute("data-extra"); });
+      if (window.innerWidth <= 860){ figs.forEach(function(f){ f.style.width = ""; f.style.height = ""; f.style.flex = ""; }); return; }
+      var W = gal.clientWidth, gap = parseFloat(getComputedStyle(gal).columnGap) || 16;
+      var target = Math.min(560, Math.max(300, W * 0.42));
+      var rows = [], row = [], sum = 0;
+      function sumA(r){ return r.reduce(function(t, f){ return t + (parseFloat(f.style.getPropertyValue("--a")) || 0.75); }, 0); }
+      function hOf(r){ return (W - gap * (r.length - 1)) / sumA(r); }
+      function place(items, h){ items.forEach(function(f){ var a = parseFloat(f.style.getPropertyValue("--a")) || 0.75; f.style.flex = "0 0 auto"; f.style.height = Math.floor(h) + "px"; f.style.width = Math.floor(a * h) + "px"; }); }
+      figs.forEach(function(f){ row.push(f); if (hOf(row) <= target){ rows.push(row); row = []; } });
+      if (row.length){
+        if (row.length === 1 && rows.length){ rows[rows.length - 1] = rows[rows.length - 1].concat(row); }
+        else rows.push(row);
+      }
+      rows.forEach(function(r, i){ var h = hOf(r); if (i === rows.length - 1 && h > target * 1.5) h = target * 1.5; place(r, h); });
+    });
+  }
+  justify(); window.addEventListener("resize", justify);
+
+  // Full gallery ("camera roll")
+  (function(){
+    var roll = document.getElementById("roll"); if (!roll) return;
+    var grid = roll.querySelector(".roll__grid"), last = null;
+    function openRoll(sec){
+      var imgs = Array.prototype.slice.call(document.querySelectorAll("#" + sec + " .gal img"));
+      grid.innerHTML = "";
+      imgs.forEach(function(im, k){
+        var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-label", im.alt || ("תמונה " + (k + 1)));
+        var t = new Image(); t.src = im.getAttribute("src"); t.alt = ""; t.loading = "lazy"; t.decoding = "async";
+        b.appendChild(t); grid.appendChild(b);
+        b.addEventListener("click", function(){ window.__lbOpenList(imgs, k); });
+      });
+      last = document.activeElement; roll.hidden = false; roll.scrollTop = 0;
+      requestAnimationFrame(function(){ roll.classList.add("is-open"); });
+      document.documentElement.style.overflow = "hidden"; roll.querySelector(".roll__close").focus();
+    }
+    function closeRoll(){ roll.classList.remove("is-open"); document.documentElement.style.overflow = ""; setTimeout(function(){ roll.hidden = true; }, 300); if (last) last.focus(); }
+    document.querySelectorAll(".gal__all").forEach(function(b){ b.addEventListener("click", function(){ openRoll(b.getAttribute("data-sec")); }); });
+    roll.querySelector(".roll__close").addEventListener("click", closeRoll);
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !roll.hidden && document.getElementById("lb").hidden) closeRoll(); });
   })();
   render();
 })();
