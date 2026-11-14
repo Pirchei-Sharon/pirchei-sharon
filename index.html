@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פרחי שרון · עיצוב פרחוני לאירועים</title>
+<meta name="description" content="עיצוב חופות ומרכזי שולחן לחתונות ולאירועים. פרחים טריים, עיצוב מדויק.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap">
+<style>
+@font-face{font-family:"Shikma";src:url("shikma-extrabold.woff") format("woff");font-weight:800;font-style:normal;font-display:swap}
+:root{
+  --bg:#fbf7f2; --surface:#f2eae1; --line:rgb(47 38 34 / .12);
+  --ink:#2f2622; --muted:#6f625a; --blush:#ebb9b3; --sage:#7c8052; --rose:#b9736b;
+  --serif:"Shikma","Frank Ruhl Libre",serif;
+  --sans:"Assistant","Arial Hebrew",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+
+/* Header */
+.hdr{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;gap:1.5rem;padding:1rem clamp(1rem,4vw,3.5rem);background:linear-gradient(to bottom,rgb(251 247 242 / .9),rgb(251 247 242 / 0));}
+.hdr{transition:background-color .3s;max-width:100vw;box-sizing:border-box}
+.hdr.is-solid{background:rgb(251 247 242 / .94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hdr.on-intro{background:transparent}
+.cue.on-intro span,.cue.on-intro svg{color:#fff;border-color:rgb(255 255 255 / .7)}
+.hdr.on-intro .hdr__logo{opacity:0;pointer-events:none}
+.hdr.on-intro .route button{color:#fff}
+.hdr__logo{transition:opacity .3s}
+.hdr__logo img{width:clamp(88px,9vw,120px);height:auto}
+.hdr__nav{display:flex;gap:1.4rem;margin-inline-start:auto}
+.hdr__nav a{text-decoration:none;font-weight:600;padding-block:.35rem;border-bottom:1px solid transparent;transition:border-color .25s}
+.hdr__nav a:hover,.hdr__nav a[aria-current="true"]{border-bottom-color:var(--blush)}
+.hdr__cta{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border:1px solid var(--blush);border-radius:999px;color:var(--rose);font-weight:600;text-decoration:none;transition:background-color .25s,color .25s}
+.hdr__cta:hover{background:var(--blush);color:var(--ink)}
+.hdr__cta svg{width:1.15rem;height:1.15rem}
+
+/* Journey */
+.journey{position:relative}
+.stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden}
+.bg-layer,.frame-layer{position:absolute;inset:0;opacity:0;will-change:opacity}
+.bg-layer img{width:100%;height:100%;object-fit:cover;filter:blur(28px) brightness(.38) saturate(1.1);transform:scale(1.15)}
+.frame-layer img{width:100%;height:100%;object-fit:cover;will-change:transform}
+.film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--bg)}
+.stage__shade{position:absolute;inset:0;background:linear-gradient(to left,rgb(251 247 242 / .82) 0%,rgb(251 247 242 / .45) 38%,transparent 62%);pointer-events:none}
+.story{position:relative;z-index:3;margin-top:-100vh;margin-top:-100dvh;pointer-events:none}
+.chapter{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:0 clamp(1.25rem,7vw,7rem)}
+.chapter[data-ch="0"]{min-height:105vh;padding-top:24vh}
+.chapter[data-ch="t"]{min-height:120vh;padding-top:45vh;align-items:flex-end}
+.chapter[data-ch="1"]{min-height:150vh;padding-top:45vh}
+.copy{position:relative;width:min(40rem,46vw);pointer-events:auto;will-change:transform,opacity}
+.copy::before{content:"";position:absolute;z-index:-1;inset:-3rem -4rem;background:radial-gradient(ellipse at center,rgb(251 247 242 / .72) 0%,rgb(251 247 242 / .4) 50%,transparent 75%);pointer-events:none}
+.kicker{line-height:1.2;margin:0 0 .6rem;color:var(--rose);font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:1.05rem}
+.chapter h1,.chapter h2{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(2.5rem,5.6vw,5.6rem);line-height:.95;letter-spacing:-.02em;max-width:13ch}
+.chapter h1{white-space:nowrap;max-width:none}
+.chapter p.body{margin:1rem 0 0;max-width:40ch;color:var(--muted);font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.4;letter-spacing:-.005em}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 0;padding:0;list-style:none}
+.tags li{padding:.4rem .95rem;border:1px solid rgb(141 145 99 / .75);border-radius:999px;font-size:.92rem}
+.hero-cta{display:inline-flex;align-items:center;gap:.7rem;margin-top:1.4rem;padding:.85rem 1.6rem .85rem 1.3rem;border-radius:999px;background:var(--blush);color:var(--ink);font-size:1.1rem;font-weight:700;text-decoration:none;box-shadow:0 10px 40px rgb(242 201 196 / .22);transition:transform .3s,box-shadow .3s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 14px 50px rgb(242 201 196 / .38)}
+.hero-cta img{width:1.6rem;height:1.6rem;transition:transform .6s}
+.hero-cta:hover img{transform:rotate(72deg)}
+.hdr__cta{margin-inline-start:auto}
+.route{position:absolute;top:100%;right:clamp(.4rem,3vw,2.6rem);display:flex;gap:.2rem;margin-top:-.4rem}
+.hdr.is-solid{padding-bottom:3.1rem}
+.hdr.is-solid .route{top:auto;bottom:.2rem;margin-top:0}
+.route button{min-height:2.75rem;padding:.6rem .9rem;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:600;cursor:pointer}
+.route button[aria-current="step"]{color:var(--ink);text-decoration:underline;text-decoration-color:var(--blush);text-decoration-thickness:.15em;text-underline-offset:.35em}
+.progress{position:absolute;top:0;inset-inline:0;height:2px;background:rgb(47 38 34 / .1);z-index:6}
+.progress span{display:block;height:100%;background:var(--blush);transform-origin:right center;transform:scaleX(0)}
+
+/* Scroll cue */
+.cue{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom));left:50%;z-index:40;display:flex;flex-direction:column;align-items:center;gap:.35rem;transform:translateX(-50%);text-decoration:none;transition:opacity .4s,transform .4s}
+.cue.is-hidden{pointer-events:none}
+.cue.is-hidden{opacity:0;transform:translate(-50%,.75rem)}
+.cue span{font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:.02em}
+.cue svg{width:3.6rem;height:3.6rem;padding:.6rem;stroke-width:1.8;border:1px solid rgb(185 115 107 / .5);border-radius:50%;color:var(--rose);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(.5rem)}}
+
+/* Shared */
+.label{margin:0 0 .8rem;color:var(--sage);font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:1.05rem}
+.h2{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(2.3rem,4.6vw,4rem);line-height:.95;letter-spacing:-.02em}
+.lead{margin:1rem 0 0;max-width:34ch;color:var(--muted);font-size:1.15rem;line-height:1.4;letter-spacing:-.005em}
+section[id]{scroll-margin-top:6.5rem}
+
+/* Chuppot */
+.chuppot{display:grid;grid-template-columns:minmax(16rem,.8fr) 1.6fr;gap:clamp(2rem,5vw,5rem);align-items:start;padding:clamp(5rem,10vw,9rem) clamp(1.25rem,6vw,6rem) clamp(4rem,7vw,6rem)}
+.chuppot__copy{position:sticky;top:7rem}
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+.mosaic figure{margin:0;overflow:hidden;border-radius:1.25rem;background:var(--surface);aspect-ratio:3/4.6}
+.mosaic figure:nth-child(2){transform:translateY(2.5rem)}
+.mosaic img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.mosaic figure:hover img{transform:scale(1.04)}
+
+/* Rails */
+.rail{padding:clamp(4rem,8vw,7rem) 0;border-top:1px solid var(--line)}
+.rail__head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:0 clamp(1.25rem,6vw,6rem) 2rem}
+.rail__hint{margin:0;color:var(--muted)}
+.rail__track{display:flex;gap:1rem;margin:0;padding:0 clamp(1.25rem,6vw,6rem) 1rem;list-style:none;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--sage) transparent;overscroll-behavior-x:contain}
+.rail__card{flex:0 0 clamp(15rem,26vw,21rem);aspect-ratio:3/4.4;scroll-snap-align:start;overflow:hidden;border-radius:999px 999px 1.25rem 1.25rem;background:var(--surface)}
+.rail__card img{width:100%;height:100%;object-fit:cover}
+
+
+/* Videos */
+.vcard{flex:0 0 clamp(14rem,24vw,19rem);aspect-ratio:9/16;scroll-snap-align:start;overflow:hidden;border-radius:1.5rem;background:var(--surface);border:1px solid var(--line)}
+.vcard--wide{flex-basis:clamp(20rem,44vw,34rem);aspect-ratio:16/9;align-self:center}
+.vcard video{width:100%;height:100%;object-fit:cover;background:var(--surface)}
+
+
+/* Service blocks */
+.svc{padding:clamp(4.5rem,9vw,8rem) clamp(1.25rem,6vw,6rem) clamp(3rem,6vw,5rem);border-top:1px solid var(--line)}
+.svc__intro{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;margin-bottom:clamp(2rem,4vw,3.5rem)}
+.svc--flip .svc__hero{order:2}
+.svc__hero{margin:0;overflow:hidden;aspect-ratio:4/5;border-radius:999px 999px 1.5rem 1.5rem;background:var(--surface);box-shadow:0 30px 70px rgb(47 38 34 / .14)}
+.svc__hero img{width:100%;height:100%;object-fit:cover}
+.svc__cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;color:var(--rose);font-weight:800;font-size:1.1rem;text-decoration:none;border-bottom:1px solid rgb(185 115 107 / .45);padding-bottom:.25rem;transition:gap .25s,border-color .25s}
+.svc__cta:hover{gap:.9rem;border-color:var(--blush)}
+.gal{display:flex;flex-wrap:wrap;justify-content:center;gap:1.2rem;--row:clamp(24rem,38vw,35rem);max-width:68rem;margin-inline:auto}
+.gal figure{position:relative;margin:0;overflow:hidden;border-radius:1.1rem;background:var(--surface);flex:var(--a) 1 calc(var(--a) * var(--row));aspect-ratio:var(--a)}
+.gal figure[hidden]{display:none}
+.gal img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.gal figure:hover img{transform:scale(1.03)}
+.gal__more{display:block;margin:1.8rem auto 0;padding:.85rem 1.8rem;border:1px solid var(--blush);border-radius:999px;background:transparent;color:var(--rose);font:inherit;font-weight:800;font-size:1rem;cursor:pointer;transition:background-color .25s,color .25s}
+.gal__more:hover{background:var(--blush);color:var(--ink)}
+@media (max-width:860px){
+  .svc__intro{grid-template-columns:1fr}
+  .svc--flip .svc__hero{order:0}
+  .svc__hero{width:min(100%,24rem);margin-inline:auto}
+  .gal{gap:.8rem}
+  .gal figure{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){.gal img,.svc__cta{transition:none}}
+
+
+
+/* Lightbox */
+.gal figure{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgb(10 8 7 / .94);opacity:0;pointer-events:none;transition:opacity .3s}
+.lb.is-open{opacity:1;pointer-events:auto}
+.lb__img{max-width:92vw;max-height:86vh;border-radius:.8rem;box-shadow:0 30px 90px rgb(0 0 0 / .6);object-fit:contain}
+.lb__btn{position:absolute;display:grid;place-items:center;width:3.2rem;height:3.2rem;border:1px solid rgb(244 238 228 / .3);border-radius:50%;background:rgb(21 18 15 / .6);color:#f4eee4;font:inherit;font-size:1.5rem;line-height:1;cursor:pointer}
+.lb__btn:hover{background:var(--blush);color:var(--ink);border-color:var(--blush)}
+.lb__close{top:1rem;left:1rem}
+.lb__prev{right:1rem;top:50%;margin-top:-1.6rem}
+.lb__next{left:1rem;top:50%;margin-top:-1.6rem}
+.lb__count{position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);color:#c2b8a9;font-weight:700;direction:ltr}
+@media (max-width:860px){.lb__img{max-width:100vw;max-height:80vh;border-radius:0}.lb__prev,.lb__next{top:auto;bottom:1rem;margin-top:0}}
+
+
+/* Hero: quiet and editorial */
+.hero{min-height:100vh;min-height:100dvh;display:grid;grid-template-columns:1fr minmax(18rem,.8fr);align-items:center;gap:clamp(2.5rem,7vw,7rem);padding:clamp(8rem,15vh,10rem) clamp(1.5rem,8vw,8rem) clamp(4rem,9vh,6rem);background:var(--bg)}
+.hero__eyebrow{margin:0 0 .45rem;color:var(--sage);font-weight:600;font-size:.95rem;letter-spacing:.18em}
+.hero h1{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(2.6rem,5vw,5rem);line-height:1;letter-spacing:-.01em;white-space:nowrap}
+.hero__rule{display:block;width:3.5rem;height:1px;margin:2rem 0;background:var(--blush)}
+.hero__lead{margin:0;max-width:30ch;color:var(--muted);font-size:clamp(1.05rem,1.3vw,1.2rem);line-height:1.6}
+.hero__meta{margin:1.1rem 0 0;color:var(--ink);font-size:.95rem;letter-spacing:.06em}
+.hero__meta span{color:var(--rose);margin:0 .4rem}
+.hero__cta{display:inline-block;margin-top:2.4rem;padding:.9rem 1.8rem;border:1px solid var(--ink);border-radius:999px;color:var(--ink);font-weight:600;letter-spacing:.03em;text-decoration:none;transition:background-color .3s,color .3s,border-color .3s}
+.hero__cta:hover{background:var(--blush);border-color:var(--blush);color:var(--ink)}
+.hero__photo{margin:0;aspect-ratio:3/4;border-radius:999px 999px 0 0;overflow:hidden}
+.hero__photo{position:relative}
+.hero__photo img{width:100%;height:100%;object-fit:cover}
+.hero__down{display:none}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:2.5rem;padding:9rem 1.5rem 6rem}
+  .hero h1{font-size:min(11.5vw,3.4rem)}
+  .hero__rule{margin:1.5rem 0}
+  .hero__photo{width:min(100%,22rem);justify-self:center}
+}
+
+
+/* Intro: full-screen photo with logo */
+.intro{position:relative;height:100vh;height:100dvh;overflow:hidden;display:grid;place-items:center}
+.intro__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+.intro__veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgb(30 22 18 / .55),rgb(30 22 18 / .15) 70%)}
+.intro__logo{position:relative;width:clamp(10rem,22vw,16rem);height:auto;filter:drop-shadow(0 8px 30px rgb(0 0 0 / .35))}
+/* Hero photo fills the side edge to edge */
+.hero{padding:0;gap:0;grid-template-columns:1fr 1fr;align-items:stretch}
+.hero__copy{align-self:center;padding:clamp(7rem,12vh,9rem) clamp(1.5rem,7vw,7rem) clamp(4rem,9vh,6rem)}
+.hero__photo{aspect-ratio:auto;border-radius:0;height:100%;min-height:100vh;min-height:100dvh}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .hero__copy{padding:4rem 1.5rem 3rem}
+  .hero__photo{width:100%;min-height:0;height:auto;aspect-ratio:4/5;order:-1}
+  .intro{display:none}
+  .cue{display:none}
+  .hero__down{position:absolute;bottom:1rem;left:50%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.3rem;transform:translateX(-50%);color:#fff;font-weight:800;font-size:.95rem;text-decoration:none;text-shadow:0 1px 8px rgb(0 0 0 / .5)}
+  .hero__down svg{width:3.2rem;height:3.2rem;padding:.55rem;border:1.5px solid rgb(255 255 255 / .8);border-radius:50%;background:rgb(0 0 0 / .15);animation:bob 1.6s ease-in-out infinite}
+  .hero{padding-top:6.4rem}
+}
+
+
+/* Featured photos + full "camera roll" gallery */
+.gal figure[data-extra]{display:none}
+.gal__all{display:block;margin:2rem auto 0;padding:.9rem 2rem;border:1px solid var(--ink);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-weight:700;font-size:1rem;letter-spacing:.02em;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s}
+.gal__all:hover{background:var(--blush);border-color:var(--blush)}
+.roll{position:fixed;inset:0;z-index:90;overflow-y:auto;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .3s;overscroll-behavior:contain}
+.roll.is-open{opacity:1;pointer-events:auto}
+.roll__bar{position:sticky;top:0;z-index:2;display:flex;justify-content:flex-end;padding:.8rem 1rem;background:rgb(251 247 242 / .92);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.roll__close{display:grid;place-items:center;width:2.8rem;height:2.8rem;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--ink);font:inherit;font-size:1.4rem;line-height:1;cursor:pointer}
+.roll__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(24rem,1fr));gap:6px;padding:0 6px 6px;max-width:110rem;margin:0 auto}
+.roll__grid button{display:block;padding:0;border:0;aspect-ratio:4/5;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.roll__grid img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:860px){.roll__grid{grid-template-columns:repeat(2,1fr);gap:4px;padding:0 4px 4px}}
+.lb{z-index:120}
+
+/* Mobile hero: centered, calm */
+@media (max-width:860px){
+.hero__copy{text-align:center;padding:2.6rem 1.5rem 3rem}
+.hero__eyebrow{letter-spacing:.04em;font-size:1rem;margin-bottom:.6rem}
+.hero h1{font-size:min(9.5vw,2.6rem)}
+.hero__rule{margin:1.2rem auto}
+.hero__lead{margin-inline:auto;font-size:1.05rem}
+.hero__meta{margin-top:.8rem}
+}
+
+/* Process */
+.process{padding:clamp(5rem,9vw,8rem) clamp(1.25rem,6vw,6rem);background:var(--surface)}
+.process .h2{text-align:center}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,4vw,4rem);max-width:72rem;margin:3.5rem auto 0;padding:0;list-style:none}
+.steps li{padding-top:1rem;border-top:1px solid var(--line)}
+.steps .num{display:block;font-family:var(--serif);font-size:clamp(3.5rem,6vw,5.5rem);line-height:1;color:var(--rose)}
+.steps h3{margin:1rem 0 .5rem;font-weight:800;font-size:1.4rem}
+.steps p{margin:0;color:var(--muted);line-height:1.4;letter-spacing:-.005em}
+
+/* Contact */
+.contact{padding:clamp(5rem,10vw,9rem) 1.25rem;background:radial-gradient(ellipse at 50% 0%,rgb(242 201 196 / .12),transparent 60%),var(--bg)}
+.card{max-width:38rem;margin:0 auto;padding:clamp(2.5rem,6vw,4rem) clamp(1.5rem,5vw,3.5rem);border:1px solid var(--line);border-radius:2rem;text-align:center;background:#fff}
+.card__flower{margin:0 auto 1.2rem;width:4.5rem;height:auto}
+.card h2{margin:0;font-family:var(--serif);font-weight:800;font-size:clamp(1.9rem,4.2vw,3rem);line-height:1;letter-spacing:-.02em}
+.card .lead{margin:1rem auto 2rem;max-width:30ch;font-size:1.1rem}
+.wa-big{display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.1rem 1.5rem;border-radius:1.25rem;background:var(--ink);color:var(--bg);text-decoration:none;transition:background-color .25s}
+.wa-big:hover{background:var(--blush)}
+.wa-big svg{width:2rem;height:2rem;flex:none}
+.wa-big span{display:flex;flex-direction:column;text-align:start}
+.wa-big strong{font-size:1.2rem}
+.wa-big small{font-size:.95rem;opacity:.75}
+.alt{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-top:2rem}
+.phone{display:flex;flex-direction:column;align-items:center;text-decoration:none}
+.phone small{color:var(--muted);font-size:.9rem}
+.phone span{font-family:var(--serif);font-size:1.5rem;text-decoration:underline;text-decoration-color:var(--blush);text-underline-offset:.3em;text-decoration-thickness:1px}
+.insta{display:inline-flex;align-items:center;gap:.6rem;align-self:end;text-decoration:none;font-size:1.05rem}
+.insta i{display:grid;place-items:center;width:2.4rem;height:2.4rem;border:1.5px solid var(--sage);border-radius:50%;color:var(--sage);transition:background-color .25s,color .25s}
+.insta:hover i{background:var(--sage);color:#fff}
+.insta svg{width:1.2rem;height:1.2rem}
+
+.foot{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:3rem 1rem 6rem;border-top:1px solid var(--line);color:var(--muted)}
+.foot img{width:84px;height:auto}
+.foot p{margin:0;font-size:.95rem}
+.dock{display:none}
+
+@media (max-width:860px){
+  .hdr{gap:.75rem}
+  .hdr__nav{gap:.7rem}
+  .hdr__nav a{font-size:.88rem;white-space:nowrap}
+  .hdr__logo img{width:76px}
+  .hdr{padding:.8rem .9rem}
+  .hdr__cta span{display:none}
+  .hdr__cta{padding:.6rem}
+  .route{right:.2rem;left:.2rem;justify-content:flex-start;flex-wrap:nowrap}
+  .route button{padding:.6rem .5rem;font-size:.9rem;white-space:nowrap}
+  .stage__shade{background:linear-gradient(to top,var(--bg) 0%,rgb(251 247 242 / .85) 34%,transparent 62%)}
+  .chapter{padding:0 1.25rem}
+  .chapter[data-ch="0"]{padding-top:46vh}
+  .copy{width:100%}
+  .copy::before{inset:-2.5rem -1.5rem;background:radial-gradient(ellipse at center,rgb(251 247 242 / .82) 0%,rgb(251 247 242 / .55) 55%,transparent 80%)}
+  .chapter h1,.chapter h2{font-size:clamp(2rem,9vw,3.2rem);line-height:.98}
+  .chapter h1{font-size:min(10.5vw,3.2rem)}
+  .chapter p.body{margin-top:.6rem;font-size:1rem;line-height:1.4}
+  .tags{margin-top:.8rem}
+  .hero-cta{margin-top:1.1rem;font-size:1rem}
+  .chuppot{grid-template-columns:1fr}
+  .chuppot__copy{position:static}
+  .mosaic{grid-template-columns:repeat(2,1fr)}
+  .mosaic figure:nth-child(2){transform:none}
+  .mosaic figure:nth-child(n+5){display:none}
+  .steps{grid-template-columns:1fr}
+  .dock{position:fixed;bottom:calc(1rem + env(safe-area-inset-bottom));left:1rem;z-index:60;display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--blush);color:var(--ink);box-shadow:0 8px 24px rgb(47 38 34 / .2)}
+  .dock svg{width:1.8rem;height:1.8rem}
+  .cue{bottom:calc(1.1rem + env(safe-area-inset-bottom))}
+}
+@media (max-height:700px) and (max-width:860px){
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .cue svg{animation:none}
+  .mosaic img,.hero-cta{transition:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2A9.7 9.7 0 0 0 3.6 16.8L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+</svg>
+
+<header class="hdr">
+  <a class="hdr__logo" href="#top" aria-label="פרחי שרון, לראש הדף"><img src="logo-light.png" alt="פרחי שרון" width="263" height="140"></a>
+  <nav class="route" aria-label="פרקים">
+    <button type="button" data-go="0">מרכזי שולחן</button>
+    <button type="button" data-go="1">חופה</button>
+    <button type="button" data-go="v">סרטונים</button>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="intro" aria-label="פרחי שרון">
+    <img class="intro__bg" src="bouquet-close.webp" alt="ורדים, ליזיאנטוס, חרציות ופרחים צבעוניים מקרוב" width="1019" height="1280">
+    <div class="intro__veil" aria-hidden="true"></div>
+    <img class="intro__logo" src="flower.svg" alt="פרחי שרון" width="200" height="200">
+  </section>
+  <section class="hero" id="journey" aria-labelledby="hero-t">
+    <div class="hero__copy">
+      <p class="hero__eyebrow">עיצוב פרחוני לאירועים</p>
+      <h1 id="hero-t">אירוע שנשאר בלב</h1>
+      <span class="hero__rule" aria-hidden="true"></span>
+      <p class="hero__lead">עיצוב חופות ומרכזי שולחן לחתונות ולאירועים, בהתאמה אישית בשבילכם.</p>
+      <p class="hero__meta">פרחים טריים <span aria-hidden="true">·</span> עיצוב מדויק</p>
+      <a class="hero__cta wa-link" href="#" target="_blank" rel="noopener">לתיאום שיחה בוואטסאפ</a>
+    </div>
+    <figure class="hero__photo"><a class="hero__down" href="#chuppot" aria-label="גללו למטה לגלריה"><span>גללו למטה</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></a><img src="chuppah-bouquet.webp" alt="זר ורדים לבנים וורודים על וילון החופה, מקרוב" width="901" height="1600"></figure>
+  </section>
+
+  <section class="svc" id="chuppot" aria-labelledby="chuppot-t">
+    <div class="svc__intro">
+      <figure class="svc__hero"><img loading="lazy" src="chuppah-garden-close.webp" alt="חופת במבוק עם וילונות לבנים וזר ורדים בלבן, ורוד וסגול, מוארת בלילה בגן" width="1152" height="1168"></figure>
+      <div class="svc__copy">
+        <p class="label">מהאירועים שלנו</p>
+        <h2 class="h2" id="chuppot-t">חופה</h2>
+        <p class="lead">כל חופה נבנית סביב המקום ובני הזוג: גן פתוח, אוהל עם נורות או אולם ערב. וילונות, זר עליון שופע וזרי צד, בצבעים שמתאימים לכם.</p>
+      </div>
+    </div>
+    <div class="gal">
+      <figure style="--a:1.7766"><img loading="lazy" src="chuppah-side-wide.webp" alt="זר צד של ורדים לבנים וורודים על וילון החופה, בין דקלים" width="1400" height="788"></figure>
+      <figure style="--a:0.5625"><img loading="lazy" src="chuppah-garland-corner.webp" alt="חופה עם זר עליון של ורדים בלבן ואפרסק וזר צד על הווילון" width="900" height="1600"></figure>
+      <figure style="--a:0.5631"><img loading="lazy" src="chuppah-bouquet.webp" alt="זר ורדים לבנים וורודים על וילון החופה" width="901" height="1600"></figure>
+      <figure style="--a:0.7500"><img loading="lazy" src="chuppah-garden.webp" alt="חופה לבנה בגן עם זרי ורדים לבנים לאורך השביל" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="chuppah-corner.webp" alt="פינת החופה עם זר צד וורדים" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.7500"><img loading="lazy" src="chuppah-walkway.webp" alt="חופה עם זר עליון של ורדים לבנים וורודים, שביל לבן ונרות בזכוכית" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:0.7500"><img loading="lazy" src="chuppah-walkway-far.webp" alt="מדרגות לבנות ושביל אל החופה, מוקפים זרים לבנים, דקלים ושרשראות נורות" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="chuppah-aisle.webp" alt="חופה מוארת בסוף שביל לבן עם נרות בכוסות זכוכית" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5625"><img loading="lazy" src="chuppah-garland.webp" alt="זר עליון של ורדים בלבן, שמנת ואפרסק על חופה עם וילונות לבנים" width="900" height="1600"></figure>
+      <figure data-extra style="--a:0.5625"><img loading="lazy" src="chuppah-side-bouquet.webp" alt="זר צד שופע של ורדים לבנים וורודים עם עלים ארוכים על וילון החופה" width="900" height="1600"></figure>
+    </div>
+    <button type="button" class="gal__all" data-sec="chuppot">לצפייה בגלריה המלאה</button>
+  </section>
+
+  <section class="svc svc--flip" id="merkazim" aria-labelledby="merkazim-t">
+    <div class="svc__intro">
+      <figure class="svc__hero"><img loading="lazy" src="vase-gypsophila.webp" alt="אגרטל זכוכית עם גיבסנית, ורדים לבנים וליזיאנטוס סגול על שולחן עץ" width="1200" height="1600"></figure>
+      <div class="svc__copy">
+        <p class="label">לכל שולחן</p>
+        <h2 class="h2" id="merkazim-t">מרכזי שולחן</h2>
+        <p class="lead">סידורים נמוכים ושופעים, בקבוקונים עם פרחים בודדים, גיבסנית ונרות בזכוכית. כל שולחן מקבל את הסגנון שמתאים לכם ולאולם.</p>
+      </div>
+    </div>
+    <div class="gal">
+      <figure style="--a:0.9648"><img loading="lazy" src="urn-white-roses.webp" alt="ורדים לבנים ופלוקס בכד קרמיקה לבן על שולחן ארוך" width="1232" height="1277"></figure>
+      <figure style="--a:0.6432"><img loading="lazy" src="vase-lisianthus-tall.webp" alt="ליזיאנטוס לבן וירק באגרטל זכוכית גבוה על שולחן עגול" width="1006" height="1564"></figure>
+      <figure style="--a:0.5625"><img loading="lazy" src="table-crystal-vase.webp" alt="ורדים לבנים בבקבוק קריסטל ליד פמוט נר גבוה, באולם עם מנורות קש" width="900" height="1600"></figure>
+      <figure style="--a:0.5625"><img loading="lazy" src="table-long-candles.webp" alt="שולחן אבירים ארוך עם סידורי פרחים לבנים ופמוטי נרות גבוהים" width="900" height="1600"></figure>
+      <figure style="--a:1.3333"><img loading="lazy" src="table-bottles.webp" alt="שולחן עץ ארוך עם בקבוקוני זכוכית, ורדים ורודים ופמוטי נרות גבוהים" width="1200" height="900"></figure>
+      <figure data-extra style="--a:1.3333"><img loading="lazy" src="centerpiece-low.webp" alt="סידור פרחים נמוך עם ורדים לבנים וורודים וירק על שולחן עץ" width="1200" height="900"></figure>
+      <figure data-extra style="--a:0.6693"><img loading="lazy" src="floating-candles.webp" alt="נרות צפים באגרטלי זכוכית גבוהים מלאים בגיבסנית" width="945" height="1412"></figure>
+      <figure data-extra style="--a:1.3333"><img loading="lazy" src="centerpiece-hall.webp" alt="סידורי פרחים נמוכים על שולחנות עץ באולם עם תאורה סגולה" width="1200" height="900"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="table-line.webp" alt="שולחן אבירים עם סידורי פרחים לבנים ופמוטי זכוכית" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.7500"><img loading="lazy" src="oil-candles.webp" alt="שולחן עגול עם פמוטי שמן מזכוכית וזרים לבנים" width="1200" height="1600"></figure>
+      <figure data-extra style="--a:1.0119"><img loading="lazy" src="glass-candelabra.webp" alt="מנורת זכוכית עם נרות באולם ערב ליד זרים לבנים גבוהים" width="850" height="840"></figure>
+      <figure data-extra style="--a:1.1509"><img loading="lazy" src="candles-gypsophila.webp" alt="נרות לבנים בכוסות זכוכית מוקפים בגיבסנית" width="900" height="782"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="table-urn.webp" alt="סידור פרחים לבנים בכלי קרמיקה על שולחן עץ" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5981"><img loading="lazy" src="tall-candles.webp" alt="פמוטים גבוהים עם נרות על שולחן ערוך באולם" width="945" height="1580"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="small-vase.webp" alt="זר ורדים לבנים באגרטל זכוכית על שולחן עץ" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="tall-vase.webp" alt="זר ליזיאנטוס לבן באגרטל זכוכית גבוה" width="901" height="1600"></figure>
+      <figure data-extra style="--a:0.5631"><img loading="lazy" src="table-hall.webp" alt="שולחן ערוך באולם עם סידור פרחים לבן" width="901" height="1600"></figure>
+    </div>
+    <button type="button" class="gal__all" data-sec="merkazim">לצפייה בגלריה המלאה</button>
+  </section>
+
+  <section class="process" aria-labelledby="process-t">
+    <h2 class="h2" id="process-t">איך זה עובד</h2>
+    <ol class="steps">
+      <li><span class="num" aria-hidden="true">1</span><h3>שיחה ראשונה</h3><p>מספרים לי על האירוע, האולם, התאריך והאווירה שאתם חולמים עליה.</p></li>
+      <li><span class="num" aria-hidden="true">2</span><h3>התאמה אישית</h3><p>בוחרים יחד פרחים, צבעים, נרות וכלים, ומקבלים הצעה מסודרת לחופה ולשולחנות.</p></li>
+      <li><span class="num" aria-hidden="true">3</span><h3>ביום האירוע</h3><p>אני מגיע, מקים ומעצב הכול במקום.</p></li>
+    </ol>
+  </section>
+
+  <section class="rail" id="videos" data-auto="1" aria-labelledby="videos-t">
+    <div class="rail__head">
+      <h2 class="h2" id="videos-t">סרטונים מהאירועים</h2>
+      <p class="rail__hint">מדפדפים הצידה ולוחצים לצפייה</p>
+    </div>
+    <ul class="rail__track">
+      <li class="vcard vcard--wide"><video controls playsinline preload="none" poster="event-7.jpg" src="event-7.mp4" aria-label="זר צד על וילון החופה בגן"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-6.jpg" src="event-6.mp4" aria-label="אגרטל גיבסנית וורדים על שולחן באולם"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-2.jpg" src="event-2.mp4" aria-label="חופה עם זר ורדים בלבן וורוד"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-3.jpg" src="event-3.mp4" aria-label="מרכזי שולחן באולם ערב"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-4.jpg" src="event-4.mp4" aria-label="חופה מוארת בסוף שביל לבן"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-5.jpg" src="event-5.mp4" aria-label="פינת ישיבה ועיצוב בגן האירועים"></video></li>
+    </ul>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-t">
+    <div class="card">
+      <img class="card__flower" src="flower.svg" alt="" width="129" height="128">
+      <h2 id="contact-t">בואו נדבר על האירוע שלכם</h2>
+      <p class="lead">שלחו הודעה עם התאריך והמקום, ואחזור אליכם עם רעיונות והצעה.</p>
+      <a class="wa-big wa-link" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg><span><strong>שליחת הודעה בוואטסאפ</strong></span></a>
+      <div class="alt">
+        <a class="phone" href="tel:+972546123366"><small>או בטלפון</small><span dir="ltr">054-6123366</span></a>
+        <a class="insta" href="https://www.instagram.com/sharony.flowers/" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></i><span dir="ltr">@sharony.flowers</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <img src="logo-light.png" alt="פרחי שרון" width="263" height="140">
+  <p>עיצוב פרחוני לחופות ולאירועים</p>
+</footer>
+
+<div class="roll" id="roll" role="dialog" aria-modal="true" aria-label="גלריה מלאה" hidden><div class="roll__bar"><button type="button" class="roll__close" aria-label="סגירת הגלריה">×</button></div><div class="roll__grid"></div></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="תמונה מוגדלת" hidden>
+  <img class="lb__img" alt="">
+  <button type="button" class="lb__btn lb__close" aria-label="סגירה">×</button>
+  <button type="button" class="lb__btn lb__prev" aria-label="התמונה הקודמת">›</button>
+  <button type="button" class="lb__btn lb__next" aria-label="התמונה הבאה">‹</button>
+  <div class="lb__count"></div>
+</div>
+<a class="dock wa-link" href="#" target="_blank" rel="noopener" aria-label="שליחת הודעה בוואטסאפ לשרון"><svg><use href="#wa"/></svg></a>
+<a class="cue" id="cue" href="#journey"><span>גללו למטה</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="m6 13 6 6 6-6"/></svg></a>
+
+<script>
+(function(){
+  var WA = "https://wa.me/972546123366?text=" + encodeURIComponent("היי שרון, הגעתי מהאתר ואשמח לשמוע על עיצוב פרחים לאירוע שלנו");
+  document.querySelectorAll(".wa-link").forEach(function(a){ a.href = WA; });
+
+  var journey = document.getElementById("journey");
+  var routeBtns = document.querySelectorAll(".route button");
+  var cue = document.getElementById("cue");
+  var hdr = document.querySelector(".hdr");
+  var introEl = document.querySelector(".intro");
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var ticking = false, lastCh = -1;
+
+  function render(){
+    ticking = false;
+    var ch = -1, mid = window.innerHeight * 0.5;
+    function at(id){ var r = document.getElementById(id).getBoundingClientRect(); return r.top < mid && r.bottom > mid; }
+    if (at("chuppot")) ch = 1; else if (at("merkazim")) ch = 0; else if (document.getElementById("videos").getBoundingClientRect().top < mid) ch = 2;
+    if (ch !== lastCh){
+      routeBtns.forEach(function(b, k){ if (k === ch) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      lastCh = ch;
+    }
+    var jb = journey.getBoundingClientRect().bottom;
+    cue.classList.toggle("is-hidden", window.scrollY > Math.max(ih, window.innerHeight) * 0.5);
+    var ih = introEl ? introEl.offsetHeight : 0;
+    hdr.classList.toggle("is-solid", ih === 0 || window.scrollY > ih * 0.85);
+    var oi = ih > 0 && window.scrollY < ih * 0.6; hdr.classList.toggle("on-intro", oi); cue.classList.toggle("on-intro", oi);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(render); } }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  window.addEventListener("resize", onScroll);
+  routeBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = {"0":"merkazim","1":"chuppot","v":"videos"}[b.getAttribute("data-go")];
+      document.getElementById(id).scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+    });
+  });
+
+  // Endless galleries: three copies of the cards, quietly re-centred so the end never shows
+  function endless(sec, auto){
+    var track = sec.querySelector(".rail__track");
+    var orig = Array.prototype.slice.call(track.children);
+    if (!orig.length) return;
+    [0,1].forEach(function(){ orig.forEach(function(li){ var c = li.cloneNode(true); c.setAttribute("aria-hidden","true"); c.querySelectorAll("img,video").forEach(function(m){ m.setAttribute("tabindex","-1"); }); track.appendChild(c); }); });
+    var rtl = getComputedStyle(track).direction === "rtl", sign = rtl ? -1 : 1;
+    var setW = 0;
+    function measure(){ setW = track.children[orig.length].offsetLeft - track.children[0].offsetLeft; setW = Math.abs(setW); }
+    function pos(){ return Math.abs(track.scrollLeft); }
+    function setPos(x){ track.style.scrollSnapType = "none"; track.scrollLeft = sign * x; requestAnimationFrame(function(){ track.style.scrollSnapType = ""; }); }
+    function recentre(){ if (!setW) return; var x = pos(); if (x >= setW * 2) setPos(x - setW); else if (x < setW * 0.5) setPos(x + setW); }
+    function init(){ measure(); if (setW) setPos(setW); }
+    if (document.readyState === "complete") init(); else window.addEventListener("load", init);
+    window.addEventListener("resize", function(){ var r = setW ? (pos() % setW) : 0; measure(); setPos(setW + r); });
+    var t; track.addEventListener("scroll", function(){ clearTimeout(t); t = setTimeout(recentre, 140); }, {passive:true});
+    if (!auto) return;
+    var vids = track.querySelectorAll("video"), hold = 0, visible = false;
+    function busy(){ for (var i = 0; i < vids.length; i++){ if (!vids[i].paused) return true; } return Date.now() < hold; }
+    ["pointerdown","touchstart","wheel"].forEach(function(ev){ track.addEventListener(ev, function(){ hold = Date.now() + 8000; }, {passive:true}); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }, {threshold: 0.3}).observe(sec); else visible = true;
+    setInterval(function(){
+      if (!visible || busy() || reduce || !setW) return;
+      var w = track.children[1].offsetLeft - track.children[0].offsetLeft;
+      track.scrollBy({left: w, behavior: "smooth"});
+    }, 3200);
+  }
+  endless(document.getElementById("videos"), true);
+
+
+
+  // "Show all photos" buttons
+  document.querySelectorAll(".gal__more").forEach(function(btn){
+    var label = btn.textContent;
+    btn.addEventListener("click", function(){
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.parentElement.querySelectorAll("[data-more]").forEach(function(f){ f.hidden = open; });
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      btn.textContent = open ? label : "פחות תמונות";
+      if (open) btn.parentElement.querySelector(".gal").scrollIntoView({behavior: reduce ? "auto" : "smooth", block: "start"});
+    });
+  });
+
+  // Lightbox: tap a gallery photo to enlarge
+  (function(){
+    var lb = document.getElementById("lb"); if (!lb) return;
+    var img = lb.querySelector(".lb__img"), cnt = lb.querySelector(".lb__count"), list = [], i = 0, last = null;
+    function show(){ var el = list[i]; img.src = el.getAttribute("src"); img.alt = el.alt; cnt.textContent = (i + 1) + " / " + list.length; }
+    function open(gal, el){
+      list = Array.prototype.filter.call(gal.querySelectorAll("img"), function(x){ return !x.closest("[hidden]") && !x.closest("[data-extra]"); });
+      i = Math.max(0, list.indexOf(el)); last = document.activeElement; show();
+      lb.hidden = false; requestAnimationFrame(function(){ lb.classList.add("is-open"); });
+      document.documentElement.style.overflow = "hidden"; lb.querySelector(".lb__close").focus();
+    }
+    window.__lbOpenList = function(imgs, k){ list = imgs; i = k; last = document.activeElement; show(); lb.hidden = false; requestAnimationFrame(function(){ lb.classList.add("is-open"); }); document.documentElement.style.overflow = "hidden"; lb.querySelector(".lb__close").focus(); };
+    function close(){ lb.classList.remove("is-open"); if (document.getElementById("roll").hidden) document.documentElement.style.overflow = ""; setTimeout(function(){ lb.hidden = true; }, 300); if (last) last.focus(); }
+    function step(d){ i = (i + d + list.length) % list.length; show(); }
+    document.querySelectorAll(".gal").forEach(function(gal){
+      gal.querySelectorAll("figure").forEach(function(f){
+        f.tabIndex = 0; f.setAttribute("role","button"); f.setAttribute("aria-label","הגדלת התמונה");
+        f.addEventListener("click", function(){ open(gal, f.querySelector("img")); });
+        f.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); open(gal, f.querySelector("img")); } });
+      });
+    });
+    lb.querySelector(".lb__close").addEventListener("click", close);
+    lb.querySelector(".lb__next").addEventListener("click", function(e){ e.stopPropagation(); step(1); });
+    lb.querySelector(".lb__prev").addEventListener("click", function(e){ e.stopPropagation(); step(-1); });
+    lb.addEventListener("click", function(e){ if (e.target === lb) close(); });
+    document.addEventListener("keydown", function(e){
+      if (lb.hidden) return;
+      if (e.key === "Escape") close(); else if (e.key === "ArrowLeft") step(1); else if (e.key === "ArrowRight") step(-1);
+    });
+    var x0 = null;
+    lb.addEventListener("touchstart", function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+    lb.addEventListener("touchend", function(e){ if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) step(dx > 0 ? 1 : -1); });
+  })();
+
+  // Justified gallery rows on wide screens: every photo keeps its own shape, rows fill the width
+  function justify(){
+    document.querySelectorAll(".gal").forEach(function(gal){
+      var figs = Array.prototype.filter.call(gal.children, function(f){ return f.tagName === "FIGURE" && !f.hidden && !f.hasAttribute("data-extra"); });
+      if (window.innerWidth <= 860){ figs.forEach(function(f){ f.style.width = ""; f.style.height = ""; f.style.flex = ""; }); return; }
+      var W = gal.clientWidth, gap = parseFloat(getComputedStyle(gal).columnGap) || 16;
+      var target = Math.min(560, Math.max(300, W * 0.42));
+      var rows = [], row = [], sum = 0;
+      function sumA(r){ return r.reduce(function(t, f){ return t + (parseFloat(f.style.getPropertyValue("--a")) || 0.75); }, 0); }
+      function hOf(r){ return (W - gap * (r.length - 1)) / sumA(r); }
+      function place(items, h){ items.forEach(function(f){ var a = parseFloat(f.style.getPropertyValue("--a")) || 0.75; f.style.flex = "0 0 auto"; f.style.height = Math.floor(h) + "px"; f.style.width = Math.floor(a * h) + "px"; }); }
+      figs.forEach(function(f){ row.push(f); if (hOf(row) <= target){ rows.push(row); row = []; } });
+      if (row.length){
+        if (row.length === 1 && rows.length){ rows[rows.length - 1] = rows[rows.length - 1].concat(row); }
+        else rows.push(row);
+      }
+      rows.forEach(function(r, i){ var h = hOf(r); if (i === rows.length - 1 && h > target * 1.5) h = target * 1.5; place(r, h); });
+    });
+  }
+  justify(); window.addEventListener("resize", justify);
+
+  // Full gallery ("camera roll")
+  (function(){
+    var roll = document.getElementById("roll"); if (!roll) return;
+    var grid = roll.querySelector(".roll__grid"), last = null;
+    function openRoll(sec){
+      var imgs = Array.prototype.slice.call(document.querySelectorAll("#" + sec + " .gal img"));
+      grid.innerHTML = "";
+      imgs.forEach(function(im, k){
+        var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-label", im.alt || ("תמונה " + (k + 1)));
+        var t = new Image(); t.src = im.getAttribute("src"); t.alt = ""; t.loading = "lazy"; t.decoding = "async";
+        b.appendChild(t); grid.appendChild(b);
+        b.addEventListener("click", function(){ window.__lbOpenList(imgs, k); });
+      });
+      last = document.activeElement; roll.hidden = false; roll.scrollTop = 0;
+      requestAnimationFrame(function(){ roll.classList.add("is-open"); });
+      document.documentElement.style.overflow = "hidden"; roll.querySelector(".roll__close").focus();
+    }
+    function closeRoll(){ roll.classList.remove("is-open"); document.documentElement.style.overflow = ""; setTimeout(function(){ roll.hidden = true; }, 300); if (last) last.focus(); }
+    document.querySelectorAll(".gal__all").forEach(function(b){ b.addEventListener("click", function(){ openRoll(b.getAttribute("data-sec")); }); });
+    roll.querySelector(".roll__close").addEventListener("click", closeRoll);
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape" && !roll.hidden && document.getElementById("lb").hidden) closeRoll(); });
+  })();
+  render();
+})();
+</script>
+</body>
+</html>
