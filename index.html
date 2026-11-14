@@ -388,14 +388,14 @@ section[id]{scroll-margin-top:6.5rem}
     </div>
     <ul class="rail__track">
       <li class="vcard vcard--wide"><video controls playsinline preload="none" poster="event-7.jpg" src="event-7.mp4" aria-label="זר צד על וילון החופה בגן"></video></li>
-      <li class="vcard"><video controls playsinline preload="none" poster="event-6.jpg" src="event-6.mp4" aria-label="אגרטל גיבסנית וורדים על שולחן באולם"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-6.jpg?v=2" src="event-6.mp4" aria-label="אגרטל גיבסנית וורדים על שולחן באולם"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-2.jpg" src="event-2.mp4" aria-label="חופה עם זר ורדים בלבן וורוד"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-3.jpg" src="event-3.mp4" aria-label="מרכזי שולחן באולם ערב"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-4.jpg" src="event-4.mp4" aria-label="חופה מוארת בסוף שביל לבן"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-5.jpg" src="event-5.mp4" aria-label="פינת ישיבה ועיצוב בגן האירועים"></video></li>
           <li class="vcard"><video controls playsinline preload="none" poster="event-8.jpg" src="event-8.mp4" aria-label="זר עליון וזר צד על חופה עם וילונות לבנים"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-9.jpg" src="event-9.mp4" aria-label="סידורי ורדים לבנים על שולחן באולם עם מנורות קש"></video></li>
-      <li class="vcard"><video controls playsinline preload="none" poster="event-10.jpg" src="event-10.mp4" aria-label="שולחנות ערוכים עם סידורי פרחים לבנים באולם"></video></li>
+      <li class="vcard"><video controls playsinline preload="none" poster="event-10.jpg?v=2" src="event-10.mp4" aria-label="שולחנות ערוכים עם סידורי פרחים לבנים באולם"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-11.jpg" src="event-11.mp4" aria-label="זר עליון של ורדים על חופה בגן"></video></li>
       <li class="vcard"><video controls playsinline preload="none" poster="event-12.jpg" src="event-12.mp4" aria-label="זר צד של ורדים על וילון החופה"></video></li>
     </ul>
@@ -454,7 +454,7 @@ section[id]{scroll-margin-top:6.5rem}
       lastCh = ch;
     }
     var jb = journey.getBoundingClientRect().bottom;
-    cue.classList.toggle("is-hidden", window.scrollY > Math.max(ih, window.innerHeight) * 0.5);
+    cue.classList.toggle("is-hidden", document.getElementById("merkazim").getBoundingClientRect().top < window.innerHeight * 0.9);
     var ih = introEl ? introEl.offsetHeight : 0;
     hdr.classList.toggle("is-solid", ih === 0 || window.scrollY > ih * 0.85);
     var oi = ih > 0 && window.scrollY < ih * 0.6; hdr.classList.toggle("on-intro", oi); cue.classList.toggle("on-intro", oi);
